@@ -1,11 +1,28 @@
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import { BrowserRouter as Router, NavLink, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from './components/Home'
+import Home from './components/Home';
+import Nav from './components/Nav';
+import Products from './components/Products';
+import Cart from './components/Cart';
 
 function App() {
   return (
     < div className="App" >
-      <Home />
+      <Nav />
+      <main>
+
+        <Router>
+          <Switch>
+            <Route path="/cart" component={Cart} />
+            <Route path="/products" component={Products} />
+            <Route path="/" component={Home} />
+          </Switch>
+        </Router>
+      </main>
     </div >
+
   );
 }
 
