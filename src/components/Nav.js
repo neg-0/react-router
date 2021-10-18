@@ -9,6 +9,16 @@ import { BrowserRouter as Router, NavLink, Route, Switch } from 'react-router-do
 
 // import MenuIcon from '@mui/icons-material/Menu';
 
+const buttonStyle = {
+    backgroundColor: "#f9d208",
+    mx: 2,
+    fontWeight: "bold",
+    '&:hover': {
+        backgroundColor: '#fcec9c',
+        color: '#3c52b2',
+    }
+}
+
 export default function Nav() {
     return (
         <nav>
@@ -24,11 +34,9 @@ export default function Nav() {
                     >
                         <MenuIcon />
                     </IconButton> */}
-                        <Router>
-                            <NavLink to="/"><Button color="inherit">Home</Button></NavLink>
-                            <NavLink to="/products"><Button color="inherit">Products</Button></NavLink>
-                            <NavLink to="/cart"><Button color="inherit">Cart</Button></NavLink>
-                        </Router>
+                        <NavLink to="/"><Button sx={buttonStyle}>Home</Button></NavLink>
+                        <NavLink to="/products"><Button sx={buttonStyle}>Products</Button></NavLink>
+                        <NavLink to="/cart"><Button sx={buttonStyle}>Cart</Button></NavLink>
                     </Toolbar>
                 </AppBar>
             </Box>
