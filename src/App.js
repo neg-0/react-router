@@ -7,6 +7,7 @@ import Cart from './components/Cart';
 import Checkout from './components/Checkout';
 import { useState } from 'react';
 import { createContext } from 'react';
+import Details from './components/Details';
 
 export const productsList = [
   { id: 0, name: "Ride with President Camacho", price: 7000, image: "https://i.pinimg.com/564x/f8/59/51/f8595191009e50f7807bff804713bcc8.jpg" },
@@ -22,20 +23,24 @@ export const productsList = [
 ]
 
 export const CartContext = createContext()
-export const CartFunctionsContext = createContext()
+export const ProductFunctionsContext = createContext()
 
 function App() {
 
   const [cart, setCart] = useState([]) // Cart is an array of product Ids
 
-  const CartFunctions = {
+  const ProductFuncs = {
     addToCart,
     removeFromCart,
-    isInCart
+    isInCart,
+    getProduct
   }
 
   function addToCart(productId) {
-    setCart((state) => { state = [...state, productId]; console.log("cart", cart); return state })
+    setCart((state) => {
+      state = [...state, productId];
+      return state
+    })
 
   }
 
@@ -45,7 +50,6 @@ function App() {
       if (index !== -1) {
         state.splice(index, 1);
       }
-      console.log("cart", cart)
       return state
     })
   }
@@ -54,22 +58,28 @@ function App() {
     return cart.includes(productId)
   }
 
+  function getProduct(productId) {
+    console.log("getProduct", productsList.find(product => product.id === productId))
+    return productsList.find(product => product.id === productId)
+  }
+
   return (
     < div className="App" >
       <CartContext.Provider value={cart}>
-        <CartFunctionsContext.Provider value={CartFunctions}>
+        <ProductFunctionsContext.Provider value={ProductFuncs}>
           <Router>
             <Nav />
             <main>
               <Switch>
                 <Route path="/cart" > <Cart cart={cart} /></Route>
+                <Route path="/products/:productId" component={Details} />
                 <Route path="/products" component={Products} />
                 <Route path="/checkout" component={Checkout} />
                 <Route path="/" component={Home} />
               </Switch>
             </main>
           </Router>
-        </CartFunctionsContext.Provider>
+        </ProductFunctionsContext.Provider>
       </CartContext.Provider>
     </div >
 

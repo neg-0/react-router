@@ -7,12 +7,14 @@ import { Button, CardActionArea } from '@mui/material';
 import Box from '@mui/material/Box';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
-import { CartFunctionsContext } from '../App';
+import { ProductFunctionsContext } from '../App';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 export default function ProductCard({ product }) {
 
-    let cartFuncs = React.useContext(CartFunctionsContext)
+    let cartFuncs = React.useContext(ProductFunctionsContext)
     const [inCart, setInCart] = React.useState(cartFuncs.isInCart(product.id))
+    let match = useRouteMatch()
 
     function handleClick(event) {
         if (inCart) {
@@ -27,13 +29,14 @@ export default function ProductCard({ product }) {
     return (
         <Box key={product.id} sx={{ p: 1 }}>
             <Card sx={{ maxWidth: 345 }}>
-
-                <CardMedia
-                    component="img"
-                    height="400"
-                    image={product.image}
-                    alt={product.name}
-                />
+                <Link to={`${match.path}/${product.id}`} >
+                    <CardMedia
+                        component="img"
+                        height="400"
+                        image={product.image}
+                        alt={product.name}
+                    />
+                </Link>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         {product.name} - ${product.price}
@@ -45,6 +48,6 @@ export default function ProductCard({ product }) {
                     <Button onClick={handleClick}>{inCart ? <RemoveShoppingCartIcon /> : <AddShoppingCartIcon />}</Button>
                 </CardContent>
             </Card>
-        </Box>
+        </Box >
     );
 }
