@@ -25,14 +25,17 @@ export const CartFunctionsContext = createContext()
 
 function App() {
 
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([]) // Cart is an array of product Ids
 
   const CartFunctions = {
-    addToCart
+    addToCart,
+    removeFromCart,
+    isInCart
   }
 
   function addToCart(productId) {
-    setCart((state) => { return [...state, productId] })
+    setCart((state) => { state = [...state, productId]; console.log("cart", cart); return state })
+
   }
 
   function removeFromCart(productId) {
@@ -41,8 +44,13 @@ function App() {
       if (index !== -1) {
         state.splice(index, 1);
       }
+      console.log("cart", cart)
       return state
     })
+  }
+
+  function isInCart(productId) {
+    return cart.includes(productId)
   }
 
   return (
@@ -53,7 +61,7 @@ function App() {
             <Nav />
             <main>
               <Switch>
-                <Route path="/cart" > <Cart cart={cart}/></Route>
+                <Route path="/cart" > <Cart cart={cart} /></Route>
                 <Route path="/products" component={Products} />
                 <Route path="/" component={Home} />
               </Switch>
