@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Nav from './components/Nav';
 import Products from './components/Products';
 import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 import { useState } from 'react';
 import { createContext } from 'react';
 
@@ -63,6 +64,7 @@ function App() {
               <Switch>
                 <Route path="/cart" > <Cart cart={cart} /></Route>
                 <Route path="/products" component={Products} />
+                <Route path="/checkout" component={Checkout} />
                 <Route path="/" component={Home} />
               </Switch>
             </main>

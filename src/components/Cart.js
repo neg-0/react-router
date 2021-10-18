@@ -22,6 +22,6 @@ export default function Cart({ cart }) {
                 {productsList.filter((product) => cart.includes(product.id)).map((product, index) => <ProductCard key={index} product={product} />)}
 
             </Box>
-            <Link to="/checkout"><h2>Checkout</h2></Link>
+            {cart.length > 0 ? <Link to="/checkout"><h2>Checkout</h2></Link> : <h2>You have nothing in your cart!</h2>}
         </div>)
 }
