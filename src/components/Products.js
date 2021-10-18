@@ -1,19 +1,26 @@
 import ProductCard from "./ProductCard"
+import Box from '@mui/material/Box';
+import { productsList } from "../App"
 
 export default function Products() {
-    const products = [{ name: "Item 1", price: 7 },
-    { name: "Brawndo", price: 7, image: "https://i.pinimg.com/564x/05/39/5c/05395c32fb1f2d615363c6264e461300.jpg" },
-    { name: "Item 1", price: 7 },
-    { name: "Item 1", price: 7 },
-    { name: "Item 1", price: 7 },
-    { name: "Item 1", price: 7 },
-    { name: "Item 1", price: 7 },
-    { name: "Item 1", price: 7 },
-    { name: "Item 1", price: 7 },
-    { name: "Item 1", price: 7 },]
-
 
     return (
-        products.map((product, index) => <ProductCard key={index} product={product} />)
+        <div style={{ width: '100%', ali: "center" }}>
+            <h2>Products</h2>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    p: 1,
+                    m: 1,
+                    maxWidth: "100%",
+                }}
+            >
+                {productsList.map((product, index) => <ProductCard key={index} product={product} />)}
+
+            </Box>
+        </div>
+
     )
 }

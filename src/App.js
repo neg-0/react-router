@@ -1,26 +1,66 @@
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import { BrowserRouter as Router, NavLink, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './components/Home';
 import Nav from './components/Nav';
 import Products from './components/Products';
 import Cart from './components/Cart';
+import { useState } from 'react';
+import { createContext } from 'react';
+
+export const productsList = [
+  { id: 0, name: "Ride with President Camacho", price: 7000, image: "https://i.pinimg.com/564x/f8/59/51/f8595191009e50f7807bff804713bcc8.jpg" },
+  { id: 1, name: "A can of Brawndo", price: 50, image: "https://i.pinimg.com/564x/05/39/5c/05395c32fb1f2d615363c6264e461300.jpg" },
+  { id: 2, name: "The Costco Guy", price: 5000, image: "https://i.pinimg.com/originals/4b/90/11/4b9011fe1e912650ed6a87473fafe132.jpg" },
+  { id: 3, name: "Sweet Machine Gun", price: 25, image: "https://i.pinimg.com/564x/cf/69/b6/cf69b6ee1732b797d8d34742dff3e042.jpg" },
+  // { name: "Item 1", price: 7, image: "" },
+  // { name: "Item 1", price: 7, image: "" },
+  // { name: "Item 1", price: 7, image: "" },
+  // { name: "Item 1", price: 7, image: "" },
+  // { name: "Item 1", price: 7, image: "" },
+  // { name: "Item 1", price: 7, image: "" }
+]
+
+export const CartContext = createContext()
+export const CartFunctionsContext = createContext()
 
 function App() {
+
+  const [cart, setCart] = useState([])
+
+  const CartFunctions = {
+    addToCart
+  }
+
+  function addToCart(productId) {
+    setCart((state) => { return [...state, productId] })
+  }
+
+  function removeFromCart(productId) {
+    setCart((state) => {
+      let index = state.indexOf(productId);
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
+      return state
+    })
+  }
+
   return (
     < div className="App" >
-      <Nav />
-      <main>
-
-        <Router>
-          <Switch>
-            <Route path="/cart" component={Cart} />
-            <Route path="/products" component={Products} />
-            <Route path="/" component={Home} />
-          </Switch>
-        </Router>
-      </main>
+      <CartContext.Provider value={cart}>
+        <CartFunctionsContext.Provider value={CartFunctions}>
+          <Router>
+            <Nav />
+            <main>
+              <Switch>
+                <Route path="/cart" > <Cart cart={cart}/></Route>
+                <Route path="/products" component={Products} />
+                <Route path="/" component={Home} />
+              </Switch>
+            </main>
+          </Router>
+        </CartFunctionsContext.Provider>
+      </CartContext.Provider>
     </div >
 
   );
